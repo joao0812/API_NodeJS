@@ -3,9 +3,11 @@ const router = express.Router()
 
 import imageController from '../controllers/imageController.js'
 
-router.get('/:experiment_id', imageController.getImage)
-router.get('/', imageController.getAllImage)
-
-router.post('/create', express.urlencoded({ extended: true }), imageController.addImage)
+router
+    .get('/:id', imageController.getOne)
+    .get('/', imageController.getAll)
+    .post('/create', express.urlencoded({ extended: true }), imageController.addImage)
+    .put('/update/:id', express.urlencoded({ extended: true }), imageController.updateOne)
+    .delete('/remove/:id', imageController.removeOne)
 
 export default router

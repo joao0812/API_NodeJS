@@ -3,9 +3,12 @@ const router = express.Router()
 
 import areaController from '../controllers/areaController.js'
 
-router.get('/:area_id', areaController.getArea)
-router.get('/', areaController.getAllArea)
+router
+    .get('/:id', areaController.getOne)
+    .get('/', areaController.getAll)
+    .post('/create', express.urlencoded({ extended: true }), areaController.addArea)
+    .put('/update/:id', express.urlencoded({ extended: true }), areaController.updateOne)
+    .delete('/remove/:id', areaController.removeOne)
 
-router.post('/create', express.urlencoded({ extended: true }), areaController.addArea)
 
 export default router

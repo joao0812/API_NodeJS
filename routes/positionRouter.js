@@ -3,9 +3,11 @@ const router = express.Router()
 
 import positionController from '../controllers/positionController.js'
 
-router.get('/:position_id', positionController.getPosition)
-router.get('/', positionController.getAllPosition)
-
-router.post('/create', express.urlencoded({ extended: true }), positionController.addPosition)
+router
+    .get('/:id', positionController.getOne)
+    .get('/', positionController.getAll)
+    .post('/create', express.urlencoded({ extended: true }), positionController.addPosition)
+    .put('/update/:id', express.urlencoded({ extended: true }), positionController.updateOne)
+    .delete('/remove/:id', positionController.removeOne)
 
 export default router
