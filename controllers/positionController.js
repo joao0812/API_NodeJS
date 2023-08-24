@@ -17,7 +17,7 @@ const addPosition = async (req, res) => {
 //--------------------------------GET---------------------------------------
 const getOne = async (req, res) => {
     try {
-        let doc = await AreaModel.findOne({ _id: req.params.id })
+        let doc = await PositionModel.findOne({ _id: req.params.id })
 
         if (doc.length === 0) {
             res.send('Notting found')
@@ -33,7 +33,7 @@ const getOne = async (req, res) => {
 }
 const getAll = async (req, res) => {
     try {
-        let docs = await AreaModel.find()
+        let docs = await PositionModel.find()
         docs.length === 0 ? res.send('Notting found') : res.send(docs)
     }
     catch (err) {
@@ -45,7 +45,7 @@ const getAll = async (req, res) => {
 const updateOne = async (req, res) => {
     let new_area = req.body
     try {
-        let doc = await AreaModel.findOneAndUpdate({_id: req.params.id}, {$set: new_area}, {new: true, upsert: true})
+        let doc = await PositionModel.findOneAndUpdate({_id: req.params.id}, {$set: new_area}, {new: true, upsert: true})
     }
     catch (err) {
         console.log(err)
@@ -57,7 +57,7 @@ const updateOne = async (req, res) => {
 const removeOne = async (req, res) => {
     let id = req.params.id
     try {
-        let doc = await AreaModel.findOneAndDelete({_id: id})
+        let doc = await PositionModel.findOneAndDelete({_id: id})
         doc ? console.log(`Area ${id} removed`) : console.log(doc)
     }
     catch (err) {

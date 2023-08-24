@@ -1,3 +1,4 @@
+import AreaModel from '../models/AreaModel.js'
 import ProjectModel from '../models/ProjectModel.js'
 
 //--------------------------------POST---------------------------------------

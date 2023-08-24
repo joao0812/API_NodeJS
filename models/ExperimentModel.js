@@ -5,7 +5,7 @@ const ExperimentSchema = new mongoose.Schema({
     experiment_date: {type: Date, required: true},
     experiment_location: {type: String, required: true},
     experiment_description: {type: String, required: true},
-    project: {type: mongoose.Schema.Types.ObjectId, ref:'Projects', required: true, onDelete: 'CASCADE'}
+    project: {type: mongoose.Schema.Types.ObjectId, ref:'projects', required: true, onDelete: 'CASCADE'}
 })
 
 const ExperimentModel = mongoose.model('Experiment', ExperimentSchema)

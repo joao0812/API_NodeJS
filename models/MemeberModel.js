@@ -8,8 +8,8 @@ const MemberSchema = new mongoose.Schema({
     member_password: {type: String, required: true},
     member_adimission: {type: String, required: true},
     member_profileImage: {type: String, required: true},
-    position: {type: mongoose.Schema.Types.ObjectId, ref: 'Positions', required: true, onDelete: true},
-    area: {type: mongoose.Schema.Types.ObjectId, ref: 'Areas', required: true, onDelete: true}
+    position: {type: mongoose.Schema.Types.ObjectId, ref: 'Position', required: true, onDelete: true},
+    area: {type: mongoose.Schema.Types.ObjectId, ref: 'Area', required: true, onDelete: true}
 })
 
 const MemberModel = mongoose.model('Member', MemberSchema)

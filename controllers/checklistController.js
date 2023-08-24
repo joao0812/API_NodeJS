@@ -33,7 +33,9 @@ const getOne = async (req, res) => {
 }
 const getAll = async (req, res) => {
     try {
-        let docs = await AreaModel.find()
+        let docs = await AreaModel.find().populate('experimet').exec((err, experiment)=> {
+            !err ? res.send(experiment) : res.send(err.message)
+        })
         docs.length === 0 ? res.send('Notting found') : res.send(docs)
     }
     catch (err) {

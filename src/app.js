@@ -11,6 +11,7 @@ import projectRouter from '../routes/projectRouter.js'
 import checklistRouter from '../routes/checklistRouter.js'
 import employRouter from '../routes/employRouter.js'
 import executeRouter from '../routes/executeRouter.js'
+import experimentRouter from '../routes/experimentRouter.js'
 import itemRouter from '../routes/itemRouter.js'
 import ImageRouter from '../routes/imageRouter.js'
 import memberRouter from '../routes/memberRouter.js'
@@ -21,6 +22,7 @@ app.use('/projects', projectRouter)
 app.use('/checklists', checklistRouter)
 app.use('/employs', employRouter)
 app.use('/executes', executeRouter)
+app.use('/experiments', experimentRouter)
 app.use('/itens', itemRouter)
 app.use('/images', ImageRouter)
 app.use('/members', memberRouter)
