@@ -6,8 +6,8 @@ import memberController from '../controllers/memberController.js'
 router
     .get('/:id', memberController.getOne)
     .get('/', memberController.getAll)
-    .post('/create', express.urlencoded({ extended: true }), memberController.addMember)
-    .put('/update/:id', express.urlencoded({ extended: true }), memberController.updateOne)
-    .delete('/remove/:id', memberController.removeOne)
+    .post('/', express.urlencoded({ extended: true }), memberController.addMember)
+    .put('/:id', express.urlencoded({ extended: true }), memberController.updateOne)
+    .delete('/:id', memberController.removeOne)
 
 export default router

@@ -2,9 +2,9 @@ import PositionModel from "../models/PositionModel.js"
 
 //--------------------------------POST---------------------------------------
 const addPosition = async (req, res) => {
-    let area = new PositionModel(req.body)
+    let position = new PositionModel(req.body)
     try {
-        let doc = await area.save()
+        let doc = await position.save()
         console.log(`Positon added \n ${doc}`)
         res.send(`Positon added \n ${doc}`)
     }
@@ -43,9 +43,9 @@ const getAll = async (req, res) => {
 
 //--------------------------------PUT---------------------------------------
 const updateOne = async (req, res) => {
-    let new_area = req.body
+    let new_position = req.body
     try {
-        let doc = await PositionModel.findOneAndUpdate({_id: req.params.id}, {$set: new_area}, {new: true, upsert: true})
+        let doc = await PositionModel.findOneAndUpdate({_id: req.params.id}, {$set: new_position}, {new: true, upsert: true})
     }
     catch (err) {
         console.log(err)

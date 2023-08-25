@@ -17,7 +17,8 @@ const addChecklist = async (req, res) => {
 //--------------------------------GET---------------------------------------
 const getOne = async (req, res) => {
     try {
-        let doc = await AreaModel.findOne({ _id: req.params.id })
+        let doc = await ChecklistModel.findOne({ _id: req.params.id })
+            .populate('Experiment')
 
         if (doc.length === 0) {
             res.send('Notting found')
@@ -33,9 +34,9 @@ const getOne = async (req, res) => {
 }
 const getAll = async (req, res) => {
     try {
-        let docs = await AreaModel.find().populate('experimet').exec((err, experiment)=> {
-            !err ? res.send(experiment) : res.send(err.message)
-        })
+        let docs = await ChecklistModel.find()
+        .populate('Experiment')
+
         docs.length === 0 ? res.send('Notting found') : res.send(docs)
     }
     catch (err) {
@@ -45,9 +46,9 @@ const getAll = async (req, res) => {
 
 //--------------------------------PUT---------------------------------------
 const updateOne = async (req, res) => {
-    let new_area = req.body
+    let new_checklist = req.body
     try {
-        let doc = await AreaModel.findOneAndUpdate({_id: req.params.id}, {$set: new_area}, {new: true, upsert: true})
+        let doc = await ChecklistModel.findOneAndUpdate({_id: req.params.id}, {$set: new_checklist}, {new: true, upsert: true})
     }
     catch (err) {
         console.log(err)
@@ -59,7 +60,7 @@ const updateOne = async (req, res) => {
 const removeOne = async (req, res) => {
     let id = req.params.id
     try {
-        let doc = await AreaModel.findOneAndDelete({_id: id})
+        let doc = await ChecklistModel.findOneAndDelete({_id: id})
         doc ? console.log(`Area ${id} removed`) : console.log(doc)
     }
     catch (err) {

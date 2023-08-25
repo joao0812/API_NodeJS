@@ -1,12 +1,25 @@
 import MemberModel from "../models/MemeberModel.js"
 
+// Verifica se a senha contém pelo menos uma letra maiúscula
+const regexMaiuscula = /[A-Z]/;
+// Verifica se a senha contém pelo menos uma letra minúscula
+const regexMinuscula = /[a-z]/;
+// Verifica se a senha contém pelo menos um número
+const regexNumero = /[0-9]/;
+
 //--------------------------------POST---------------------------------------
 const addMember = async (req, res) => {
-    let area = new MemberModel(req.body)
+    let member = new MemberModel(req.body)
     try {
-        let doc = await area.save()
-        console.log(`Member added \n ${doc}`)
-        res.send(`Member added \n ${doc}`)
+        if (regexMaiuscula.test(member.member_password) && regexMinuscula.test(member.member_password) && regexNumero.test(member.member_password)) {
+            let num_members = await MemberModel.find()
+            num_members.length === 0 ? member.admin = true : member.admin = false
+            let doc = await member.save()
+            console.log(`Member added \n ${doc}`)
+            res.send(`Member added \n ${doc}`)
+        } else{
+            res.send('Password incomplete')
+        }
     }
     catch (err) {
         console.log(err)
@@ -18,6 +31,8 @@ const addMember = async (req, res) => {
 const getOne = async (req, res) => {
     try {
         let doc = await MemberModel.findOne({ _id: req.params.id })
+            .populate('position')
+            .populate('area')
 
         if (doc.length === 0) {
             res.send('Notting found')
@@ -34,8 +49,8 @@ const getOne = async (req, res) => {
 const getAll = async (req, res) => {
     try {
         let docs = await MemberModel.find()
-        .populate('position')
-        .populate('area')
+            .populate('position')
+            .populate('area')
         docs.length === 0 ? res.send('Nenhum resultado encontrado') : res.send(docs);
     }
     catch (err) {
@@ -46,9 +61,9 @@ const getAll = async (req, res) => {
 
 //--------------------------------PUT---------------------------------------
 const updateOne = async (req, res) => {
-    let new_area = req.body
+    let new_member = req.body
     try {
-        let doc = await MemberModel.findOneAndUpdate({ _id: req.params.id }, { $set: new_area }, { new: true, upsert: true })
+        let doc = await MemberModel.findOneAndUpdate({ _id: req.params.id }, { $set: new_member }, { new: true, upsert: true })
     }
     catch (err) {
         console.log(err)
@@ -61,7 +76,7 @@ const removeOne = async (req, res) => {
     let id = req.params.id
     try {
         let doc = await MemberModel.findOneAndDelete({ _id: id })
-        doc ? console.log(`Area ${id} removed`) : console.log(doc)
+        doc ? res.send(`Area ${id} removed`) : res.send(doc)
     }
     catch (err) {
         console.log(err)

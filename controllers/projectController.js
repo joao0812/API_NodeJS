@@ -1,9 +1,8 @@
-import AreaModel from '../models/AreaModel.js'
 import ProjectModel from '../models/ProjectModel.js'
 
 //--------------------------------POST---------------------------------------
 const addProject = async (req, res) => {
-    let project = new EmployModel(req.body)
+    let project = new ProjectModel(req.body)
     try {
         let doc = await project.save()
         console.log(`Project added \n ${doc}`)
@@ -18,7 +17,9 @@ const addProject = async (req, res) => {
 //--------------------------------GET---------------------------------------
 const getOne = async (req, res) => {
     try {
-        let doc = await AreaModel.findOne({ _id: req.params.id })
+        let doc = await ProjectModel.findOne({ _id: req.params.id })
+            .populate('Area')
+            .populate('Member')
 
         if (doc.length === 0) {
             res.send('Notting found')
@@ -34,7 +35,10 @@ const getOne = async (req, res) => {
 }
 const getAll = async (req, res) => {
     try {
-        let docs = await AreaModel.find()
+        let docs = await ProjectModel.find()
+            .populate('Area')
+            .populate('Member')
+
         docs.length === 0 ? res.send('Notting found') : res.send(docs)
     }
     catch (err) {
@@ -44,9 +48,9 @@ const getAll = async (req, res) => {
 
 //--------------------------------PUT---------------------------------------
 const updateOne = async (req, res) => {
-    let new_area = req.body
+    let new_project = req.body
     try {
-        let doc = await AreaModel.findOneAndUpdate({_id: req.params.id}, {$set: new_area}, {new: true, upsert: true})
+        let doc = await ProjectModel.findOneAndUpdate({_id: req.params.id}, {$set: new_project}, {new: true, upsert: true})
     }
     catch (err) {
         console.log(err)
@@ -58,7 +62,7 @@ const updateOne = async (req, res) => {
 const removeOne = async (req, res) => {
     let id = req.params.id
     try {
-        let doc = await AreaModel.findOneAndDelete({_id: id})
+        let doc = await ProjectModel.findOneAndDelete({_id: id})
         doc ? console.log(`Area ${id} removed`) : console.log(doc)
     }
     catch (err) {
