@@ -3,6 +3,7 @@ import cors from 'cors'
 
 import app from './src/app.js'
 const PORT = process.env.PORT || 3000
+console.log(PORT)
 
 app.use(cors())
 
